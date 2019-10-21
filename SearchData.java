@@ -123,15 +123,16 @@ public class SearchData {
             String type;
             String target;
             while(true) {
-                System.out.println("请输入检索类型\n1（标题） 2（发件人） 3（正文） 4（退出）");
+                System.out.println("请输入检索类型\n1（标题） 2（发件人） 3（收件人） 4（正文） 5（退出）");
                 Scanner input = new Scanner(System.in);
                 type = input.next();
                 boolean flag = true;
                 switch (type){
-                    case "1": type = "Subject"; break;
-                    case "2": type = "From"; break;
-                    case "3": type = "Content"; break;
-                    case "4": return;
+                    case "1": type = "Subject";   break;
+                    case "2": type = "Author";    break;
+                    case "3": type = "Addressee"; break;
+                    case "4": type = "Content";   break;
+                    case "5": return;
                     default: flag = false;
                 }
                 if(flag) break;

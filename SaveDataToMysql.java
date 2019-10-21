@@ -7,13 +7,15 @@ class DATA{
     String Path;
     String Subject;
     String Author;
+    String Addressee;
     String Content;
     DATA()
     {
-        this.Path    = "";
-        this.Subject = "";
-        this.Author  = "";
-        this.Content = "";
+        this.Path      = "";
+        this.Subject   = "";
+        this.Author    = "";
+        this.Addressee = "";
+        this.Content   = "";
     }
 }
 
@@ -72,6 +74,13 @@ public class SaveDataToMysql {
                                         }
                                         temp_data.Author = temp_from.toString();
                                         break;
+                                    case "To":
+                                        StringBuilder temp_to = new StringBuilder();
+                                        for (int i = 1; i < tempString.length; ++i) {
+                                            temp_to.append(tempString[i]);
+                                        }
+                                        temp_data.Addressee = temp_to.toString();
+                                        break;
                                     case "X-FileName":
                                         if_content = true; //后面开始是正文部分
                                         break;
@@ -104,12 +113,13 @@ public class SaveDataToMysql {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             // 执行sql语句
             for (DATA data : dates) {
-                String sql = "INSERT INTO `Email` VALUES (?,?,?,?)";
+                String sql = "INSERT INTO `Email` VALUES (?,?,?,?,?)";
                 stmt = conn.prepareStatement(sql);
                 stmt.setString(1, data.Path);
                 stmt.setString(2, data.Subject);
                 stmt.setString(3, data.Author);
-                stmt.setString(4, data.Content);
+                stmt.setString(4, data.Addressee);
+                stmt.setString(5, data.Content);
                 stmt.executeUpdate();
                 System.out.println("InsertMysql: " + data.Path);
             }
